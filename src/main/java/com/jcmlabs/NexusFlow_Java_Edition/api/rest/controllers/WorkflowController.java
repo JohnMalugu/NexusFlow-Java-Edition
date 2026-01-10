@@ -1,4 +1,4 @@
-package com.jcmlabs.NexusFlow_Java_Edition.api.controllers;
+package com.jcmlabs.NexusFlow_Java_Edition.api.rest.controllers;
 
 import org.springframework.web.bind.annotation.*;
 
