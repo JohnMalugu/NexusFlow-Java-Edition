@@ -1,4 +1,7 @@
 package com.jcmlabs.NexusFlow_Java_Edition.domain.task;
 
-public class TaskRepository {
+import java.util.Collection;
+
+public interface TaskRepository {
+    void saveAll(Collection<Task> tasks);
 }
