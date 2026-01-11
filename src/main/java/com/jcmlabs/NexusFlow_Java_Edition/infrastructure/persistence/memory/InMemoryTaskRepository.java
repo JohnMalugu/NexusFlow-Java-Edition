@@ -1,4 +1,4 @@
-package com.jcmlabs.NexusFlow_Java_Edition.infrastructure.persistence;
+package com.jcmlabs.NexusFlow_Java_Edition.infrastructure.persistence.memory;
 
 import com.jcmlabs.NexusFlow_Java_Edition.domain.task.Task;
 import com.jcmlabs.NexusFlow_Java_Edition.domain.task.TaskRepository;
