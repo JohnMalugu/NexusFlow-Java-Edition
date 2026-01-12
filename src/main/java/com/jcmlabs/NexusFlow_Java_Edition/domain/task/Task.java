@@ -1,31 +1,39 @@
 package com.jcmlabs.NexusFlow_Java_Edition.domain.task;
 
+import com.jcmlabs.NexusFlow_Java_Edition.domain.common.TaskType;
 import lombok.Getter;
+
 import java.time.Instant;
 import java.util.UUID;
 
-@Getter // Automatically generates getId(), getName(), getState(), etc.
+@Getter
 public class Task {
 
     private final UUID id;
     private final String name;
-    private TaskState state;
+    private final TaskType type;
+    private final String payload;
     private final Instant createdAt;
 
-    // Standard constructor for new tasks
-    public Task(String name) {
-        this.id = UUID.randomUUID();
-        this.name = name;
-        this.state = TaskState.PENDING;
-        this.createdAt = Instant.now();
-    }
+    private TaskState state;
 
-    // Reconstitution constructor (Used by the Mapper when loading from DB)
-    public Task(UUID id, String name, TaskState state, Instant createdAt) {
+    private Task(UUID id, String name, TaskType type, String payload, Instant createdAt, TaskState state) {
+
         this.id = id;
         this.name = name;
-        this.state = state;
+        this.type = type;
+        this.payload = payload;
         this.createdAt = createdAt;
+        this.state = state;
+    }
+
+    public static Task newTask(String name, TaskType type, String payload) {
+        return new Task(UUID.randomUUID(), name, type, payload, Instant.now(), TaskState.PENDING);
+    }
+
+    public static Task rehydrate(UUID id, String name, TaskType type, String payload, Instant createdAt, TaskState state) {
+
+        return new Task(id, name, type, payload, createdAt, state);
     }
 
     public void schedule() {
@@ -48,17 +56,18 @@ public class Task {
         this.state = TaskState.FAILED;
     }
 
-    public boolean isPending() {
+
+    public boolean isReady() {
         return state == TaskState.PENDING;
     }
 
-    // Private helper to keep the business methods clean
+    public boolean isTerminal() {
+        return state == TaskState.SUCCESS || state == TaskState.FAILED;
+    }
+
     private void ensureState(TaskState expected, String action) {
         if (this.state != expected) {
-            throw new IllegalStateException(
-                    String.format("Invalid transition: Task must be %s to %s, but was %s",
-                            expected, action, this.state)
-            );
+            throw new IllegalStateException("Invalid transition: cannot " + action + " task in state " + this.state);
         }
     }
 }

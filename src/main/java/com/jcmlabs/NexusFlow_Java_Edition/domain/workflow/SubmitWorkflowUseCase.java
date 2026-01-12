@@ -1,9 +1,9 @@
 package com.jcmlabs.NexusFlow_Java_Edition.domain.workflow;
 
 
+import com.jcmlabs.NexusFlow_Java_Edition.domain.task.Task;
 import com.jcmlabs.NexusFlow_Java_Edition.domain.task.TaskRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.streams.processor.internals.Task;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
