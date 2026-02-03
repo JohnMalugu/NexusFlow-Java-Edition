@@ -1,6 +1,7 @@
 package com.jcmlabs.NexusFlow_Java_Edition.domain.task;
 
 import com.jcmlabs.NexusFlow_Java_Edition.domain.common.TaskType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -16,6 +17,9 @@ public class Task {
     private final Instant createdAt;
 
     private TaskState state;
+
+    @Enumerated
+    private TaskType taskType;
 
     private Task(UUID id, String name, TaskType type, String payload, Instant createdAt, TaskState state) {
 
