@@ -3,10 +3,14 @@ package com.jcmlabs.NexusFlow_Java_Edition.domain.task;
 import com.jcmlabs.NexusFlow_Java_Edition.domain.common.TaskType;
 import jakarta.persistence.Enumerated;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
+@RequiredArgsConstructor
 @Getter
 public class Task {
 
@@ -18,21 +22,10 @@ public class Task {
 
     private TaskState state;
 
-    @Enumerated
-    private TaskType taskType;
 
-    private Task(UUID id, String name, TaskType type, String payload, Instant createdAt, TaskState state) {
 
-        this.id = id;
-        this.name = name;
-        this.type = type;
-        this.payload = payload;
-        this.createdAt = createdAt;
-        this.state = state;
-    }
-
-    public static Task newTask(String name, TaskType type, String payload) {
-        return new Task(UUID.randomUUID(), name, type, payload, Instant.now(), TaskState.PENDING);
+    public static Task newTask(String name, TaskType type, String payload, LocalDateTime createdAt) {
+        return new Task(UUID.randomUUID(), name, type, payload, Instant.now());
     }
 
     public static Task rehydrate(UUID id, String name, TaskType type, String payload, Instant createdAt, TaskState state) {
